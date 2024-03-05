@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './imageGenerator.css';
 import default_img from '../assests/default_image.svg';
 
-const generate = async (search) => {
+const generate = async (search, apiKey) => {
     const form = new FormData();
     form.append('prompt', search);
     
@@ -10,7 +10,7 @@ const generate = async (search) => {
         const response = await fetch('https://clipdrop-api.co/text-to-image/v1', {
             method: 'POST',
             headers: {
-                'x-api-key': "000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                'x-api-key': apiKey,
             },
             body: form,
         });
@@ -27,6 +27,14 @@ const ImageGenerator = () => {
     const [url, setUrl] = useState("/");
     const inputRef = useRef(null);
     const [loading, setLoading] = useState(false);
+    const [apiKey, setApiKey] = useState("");
+
+    useEffect(() => {
+        const apiKeyInput = window.prompt("Enter your API key:");
+        if (apiKeyInput) {
+            setApiKey(apiKeyInput);
+        }
+    }, []);
 
     const imageGenerator = async () => {
         if (inputRef.current.value === "") {
@@ -35,7 +43,7 @@ const ImageGenerator = () => {
 
         try {
             setLoading(true);
-            const imageUrl = await generate(inputRef.current.value);
+            const imageUrl = await generate(inputRef.current.value, apiKey);
             if (imageUrl) {
                 setUrl(imageUrl);
             }
