@@ -5,12 +5,13 @@ import default_img from '../assests/default_image.svg';
 const generate = async (search, apiKey) => {
     const form = new FormData();
     form.append('prompt', search);
-    
+
     try {
         const response = await fetch('https://clipdrop-api.co/text-to-image/v1', {
             method: 'POST',
             headers: {
                 'x-api-key': apiKey,
+                //67225af72f0589bd3f7c60661a0f4ee3c39b95de0978a9aaf9f91335533ea3240ada1b9a47e01378edea1672d5804eba
             },
             body: form,
         });
@@ -57,7 +58,7 @@ const ImageGenerator = () => {
     return (
         <div>
             <div className="ai-image">
-                <div className="header">AI IMAGE <span>Generation</span></div>
+                <div className="header">Arti-Fy <span>TEXT</span></div>
                 <div className="img-loading">
                     <div className="image"><img src={url === "/" ? default_img : url} alt="" /></div>
                     <div className="loading">
